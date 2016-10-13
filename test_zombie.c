@@ -19,7 +19,7 @@ int main()
     }
     printf("I am father process.I will sleep two seconds\n");
     //等待子进程先退出
-    sleep(2);
+    sleep(50);
     //输出进程信息
     system("ps -o pid,ppid,state,tty,command");
     printf("father process is exiting.\n");
