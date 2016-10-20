@@ -4,6 +4,8 @@
 	> Mail: 445241843@qq.com 
 	> Created Time: 2016年10月19日 星期三 22时17分08秒
  ************************************************************************/
+#define LIST_POISON1 ((void *)0x00100100)
+#define LIST_POISON2 ((void *)0x00200200)
 //双向链表
 struct list_head				//链表地址
 {
@@ -39,4 +41,23 @@ static inline void list_add_tail(struct list_head *new, struct list_head *head)
 }
 
 
+//删除的核心算法(非常的简洁)
+static inline void __list_del(struct list_head *prev, struct list_head *next)
+{
+	next->prev = prev;
+	prev->next = next;
+}
+//删除节点（封装了上述函数）对要删除的节点不做任何操作
+static inline void list_del(struct list_head *entry)
+{
+	__list_del(entry->prev, entry->next);
+	entry->next = LIST_POISON1;				//这里暂且先不讨论它为什么不将2个指针赋值为NULL
+	entry->prev = LIST_POISON2;
+}
 
+//对删除的节点初始化很一个新的链表
+static inline void list_del_init(struct list_head *entry)
+{
+	__list_del(entry->prev, entry->next);
+	INIT_LIST_HEAD(entry);
+}
