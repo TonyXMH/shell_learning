@@ -59,5 +59,5 @@ static inline void list_del(struct list_head *entry)
 static inline void list_del_init(struct list_head *entry)
 {
 	__list_del(entry->prev, entry->next);
-	INIT_LIST_HEAD(entry);
+	INIT_LIST_HEAD(entry);					//这里用的是内联函数而不是宏函数，参数是有类型的。
 }
