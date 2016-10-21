@@ -61,3 +61,33 @@ static inline void list_del_init(struct list_head *entry)
 	__list_del(entry->prev, entry->next);
 	INIT_LIST_HEAD(entry);					//这里用的是内联函数而不是宏函数，参数是有类型的。
 }
+//移动节点
+//以头插法添加节点
+static inline void list_move(struct list_head *list, struct list_head *head)
+{
+	__list_del(list->prev, list->next);
+	list_add(list, head);
+}
+//移动节点
+//以尾插法添加节点
+static inline void list_move_tail(struct list_head *list, struct list_head *head)
+{
+	__list_del(list->prev, list->next);
+	list_add_tail(list, head);
+}
+//替换节点,我们没有对旧的节点做任何操作
+static inline void list_replace(struct list_head *old, struct list_head *new)
+{
+	new->next = old->next;
+	new-prev = old->prev;
+	new->next->prev = new;
+	new->prev->next = new;
+}
+//替换节点,将旧节点初始化为新的链表
+static inline void list_replace_init(struct list_head *old, struct list_head *new)
+{
+	list_replace(old, new);
+	INIT_LIST_HEAD(old);
+}
+
+
