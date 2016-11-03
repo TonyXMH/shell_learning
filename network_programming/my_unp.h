@@ -13,5 +13,5 @@ void err_msg(const char *, ...);			//err_doit()是静态的所以不在头文件
 void err_quit(const char *, ..,);
 void err_ret(const char *, ...);
 void err_sys(const char *, ...);
-
+//
 #endif					//__MY_UNP_H
